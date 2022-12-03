@@ -57,18 +57,28 @@ const Header = () => {
       backgroundColor="#18181b"
     >
       <Box color="white" maxWidth="1280px" margin="0 auto">
-        <HStack
-          px={16}
-          py={4}
-          justifyContent="space-between"
-          alignItems="center"
-        >
+        <HStack px={16} py={4} justifyContent="space-between" alignItems="center">
           <nav>
             {/* Add social media links based on the `socials` data */}
+            <HStack spacing={8}>
+              {socials.map((soc, index) => {
+                return (
+                  <a href={soc.url} key={index}>
+                    <FontAwesomeIcon icon={soc.icon} size="2x" />
+                  </a>
+                );
+              })}
+            </HStack>
           </nav>
           <nav>
             <HStack spacing={8}>
               {/* Add links to Projects and Contact me section */}
+              <a href="/#projects" onClick={handleClick("projects")}>
+                Projects
+              </a>
+              <a href="/#contact-me" onClick={handleClick("contactme")}>
+                Contact Me
+              </a>
             </HStack>
           </nav>
         </HStack>
