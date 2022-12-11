@@ -43,9 +43,27 @@ const Header = () => {
       });
     }
   };
+  let prev;
 
+  const handleScroll = (e) => {
+    const window = e.currentTarget;
+    if (prev > window.scrollY) {
+      HeaderContainer.current.style.transform = "translateY(-0px)";
+    } else if (prev < window.scrollY) {
+      HeaderContainer.current.style.transform = "translateY(-200px)";
+    }
+    prev = window.scrollY;
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const HeaderContainer = useRef(null);
   return (
     <Box
+      ref={HeaderContainer}
       position="fixed"
       top={0}
       left={0}

@@ -28,7 +28,12 @@ const LandingSection = () => {
       comments: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      submit("dummy.com", values).then(() => {
+        const { type, message } = response;
+        if (response) {
+          onOpen(type, message);
+        }
+      });
     },
     validationSchema: Yup.object({
       firstName: Yup.string().required("Required"),
@@ -44,7 +49,7 @@ const LandingSection = () => {
           Contact me
         </Heading>
         <Box p={6} rounded="md" w="100%">
-          <form onSubmit={formik.submitForm}>
+          <form onSubmit={formik.handleSubmit}>
             <VStack spacing={4}>
               <FormControl isInvalid={formik.errors.firstName && formik.touched.firstName}>
                 <FormLabel htmlFor="firstName">Name</FormLabel>
@@ -71,8 +76,12 @@ const LandingSection = () => {
                 <FormLabel htmlFor="type">Type of enquiry</FormLabel>
                 <Select id="type" name="type">
                   <option value="hireMe">Freelance project proposal</option>
-                  <option value="openSource">Open source consultancy session</option>
-                  <option value="other">Other</option>
+                  <option value="openSource" style={{ color: "black" }}>
+                    Open source consultancy session
+                  </option>
+                  <option value="other" style={{ color: "black" }}>
+                    Other
+                  </option>
                 </Select>
               </FormControl>
               <FormControl isInvalid={formik.touched.comments && formik.errors.comments}>
@@ -86,7 +95,7 @@ const LandingSection = () => {
                 <FormErrorMessage>{formik.errors.comments}</FormErrorMessage>
               </FormControl>
               <Button type="submit" colorScheme="purple" width="full">
-                Submit
+                {isLoading ? "Loading" : "Submit"}
               </Button>
             </VStack>
           </form>
